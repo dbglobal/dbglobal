@@ -4,24 +4,26 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>DB Global Services | AI Voice Answering + Booking</title>
-  <meta name="description" content="DB Global Services builds AI voice answering and booking systems for schedule-based businesses nationwide." />
+  <meta name="description" content="DB Global Services builds AI voice answering + booking systems for schedule-based businesses nationwide." />
   <style>
     :root{
-      /* GitHub-inspired dark palette */
-      --bg:#0d1117;
-      --panel:#161b22;
-      --panel-2:#0f141b;
-      --border:#30363d;
-      --text:#e6edf3;
-      --muted:#8b949e;
+      --bg:#0b0f14;
+      --panel:#0f141b;
+      --panel2:#121a23;
+      --border:rgba(255,255,255,.10);
+      --text:#e7eef7;
+      --muted:#a6b3c2;
+      --muted2:#8b97a6;
+
       --accent:#2f81f7;
-      --accent-hover:#1f6feb;
-      --accent-soft:#9ecbff;
-      --shadow:0 12px 40px rgba(0,0,0,.35);
+      --accent2:#1f6feb;
+      --soft:rgba(47,129,247,.12);
+
+      --shadow: 0 18px 60px rgba(0,0,0,.42);
+      --radius:16px;
+      --radius2:22px;
 
       --max:1120px;
-      --radius:12px;
-      --radius-lg:16px;
     }
 
     *{box-sizing:border-box}
@@ -29,903 +31,665 @@
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height:1.5;
+      background: radial-gradient(900px 420px at 18% 0%, rgba(47,129,247,.12), transparent 55%),
+                  radial-gradient(900px 420px at 85% 20%, rgba(47,129,247,.08), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.55;
     }
 
     a{color:inherit;text-decoration:none}
-    img{display:block;max-width:100%}
-
     .container{
       width:100%;
       max-width:var(--max);
       margin:0 auto;
-      padding:0 20px;
+      padding:0 22px;
     }
 
-    /* Header */
+    /* Topbar */
     .topbar{
-      position:sticky;
-      top:0;
-      z-index:50;
-      backdrop-filter: blur(8px);
-      background: rgba(13,17,23,.88);
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(11,15,20,.78);
       border-bottom:1px solid var(--border);
     }
-
     .topbar-inner{
-      min-height:68px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:16px;
+      gap:14px;
+      padding:14px 0;
     }
-
     .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width:0;
+      display:flex; align-items:center; gap:12px; min-width:0;
     }
-
-    .brand-logo{
-      width:38px;
-      height:38px;
-      border-radius:10px;
-      object-fit:contain;
-      background:#0b0f14;
+    .logo{
+      width:38px; height:38px; border-radius:12px;
+      background:#0a0e13;
       border:1px solid var(--border);
-      padding:4px;
+      padding:6px;
+      object-fit:contain;
     }
-
-    .brand-meta{min-width:0}
-    .brand-name{
-      font-weight:700;
+    .brand-title{
+      font-weight:800;
       font-size:14px;
-      color:var(--text);
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
+      letter-spacing:.2px;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
       max-width:320px;
     }
     .brand-sub{
       font-size:12px;
-      color:var(--muted);
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
+      color:var(--muted2);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
       max-width:320px;
     }
-
     .nav{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      flex-wrap:wrap;
+      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
       justify-content:flex-end;
     }
-
-    .nav-link{
-      color:var(--muted);
-      font-size:14px;
+    .nav a.link{
+      color:var(--muted2);
+      font-size:13px;
       padding:8px 10px;
-      border-radius:8px;
+      border-radius:10px;
       border:1px solid transparent;
     }
-    .nav-link:hover{
+    .nav a.link:hover{
       color:var(--text);
       border-color:var(--border);
       background:rgba(255,255,255,.02);
     }
 
     .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      border-radius:8px;
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      border-radius:12px;
       padding:10px 14px;
-      font-weight:600;
-      font-size:14px;
+      font-weight:700;
+      font-size:13px;
       border:1px solid var(--border);
-      transition:.15s ease;
       cursor:pointer;
+      transition: .15s ease;
       white-space:nowrap;
     }
     .btn:hover{transform:translateY(-1px)}
-    .btn-primary{
-      background:var(--accent);
-      border-color:rgba(47,129,247,.4);
-      color:white;
+    .btn.primary{
+      background:linear-gradient(180deg, var(--accent) 0%, var(--accent2) 100%);
+      border-color: rgba(47,129,247,.55);
+      color:#fff;
+      box-shadow: 0 10px 30px rgba(47,129,247,.22);
     }
-    .btn-primary:hover{background:var(--accent-hover)}
-    .btn-secondary{
-      background:#21262d;
+    .btn.secondary{
+      background:rgba(255,255,255,.04);
       color:var(--text);
     }
-    .btn-secondary:hover{
-      background:#262c36;
+    .btn.secondary:hover{background:rgba(255,255,255,.06)}
+
+    /* Layout sections */
+    section{padding:52px 0}
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,.02) 0%, rgba(255,255,255,.01) 100%);
+      border:1px solid var(--border);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
     }
 
     /* Hero */
     .hero{
-      padding:28px 0 18px;
+      padding:54px 0 26px;
     }
-
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap:16px;
+    .hero-wrap{
+      padding:30px;
     }
-
-    .card{
-      background:var(--panel);
-      border:1px solid var(--border);
-      border-radius:var(--radius-lg);
-      box-shadow:var(--shadow);
-    }
-
-    .hero-main{
-      padding:24px;
-      background:
-        radial-gradient(600px 240px at 10% 0%, rgba(47,129,247,.14), transparent 55%),
-        linear-gradient(180deg, #161b22 0%, #121820 100%);
-    }
-
-    .eyebrow{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
       padding:6px 10px;
       border-radius:999px;
       border:1px solid rgba(47,129,247,.35);
-      background:rgba(47,129,247,.08);
-      color:var(--accent-soft);
+      background: rgba(47,129,247,.10);
+      color: #bcd9ff;
       font-size:12px;
-      font-weight:600;
+      font-weight:700;
       margin-bottom:14px;
     }
-
     h1{
       margin:0 0 12px;
-      font-size: clamp(30px, 4vw, 46px);
-      line-height:1.08;
-      letter-spacing:-.5px;
+      font-size: clamp(34px, 4.3vw, 54px);
+      line-height:1.04;
+      letter-spacing:-.7px;
+      max-width:18ch;
     }
-
-    .hero-main p{
+    .hero p{
       margin:0;
       color:var(--muted);
       font-size:15px;
-      max-width:60ch;
+      max-width:70ch;
     }
-
     .hero-actions{
-      margin-top:16px;
       display:flex;
+      gap:12px;
       flex-wrap:wrap;
-      gap:10px;
+      margin-top:18px;
     }
-
-    .hero-tags{
-      margin-top:14px;
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-    }
-    .tag{
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      color:var(--muted);
+    .sub-actions{
+      margin-top:10px;
+      color:var(--muted2);
       font-size:12px;
-      background:rgba(255,255,255,.01);
     }
 
-    .hero-side{
-      padding:18px;
+    /* Credibility row */
+    .cred{
+      margin-top:18px;
       display:grid;
-      gap:10px;
-      align-content:start;
-    }
-
-    .stat{
-      border:1px solid var(--border);
-      border-radius:10px;
-      padding:12px;
-      background:var(--panel-2);
-    }
-    .stat .k{
-      color:var(--muted);
-      font-size:12px;
-      margin-bottom:4px;
-    }
-    .stat .v{
-      font-size:15px;
-      font-weight:700;
-      color:var(--text);
-      word-break:break-word;
-    }
-
-    .note{
-      margin-top:2px;
-      border:1px dashed rgba(47,129,247,.25);
-      background:rgba(47,129,247,.05);
-      color:var(--muted);
-      border-radius:10px;
-      padding:12px;
-      font-size:13px;
-    }
-
-    /* Section nav row */
-    .section-nav{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:10px;
-      background:var(--panel);
-      border:1px solid var(--border);
-      border-radius:14px;
-      padding:10px;
-    }
-    .section-nav a{
-      text-align:center;
-      padding:11px 10px;
-      border-radius:8px;
-      border:1px solid var(--border);
-      background:#0f141b;
-      color:var(--text);
-      font-weight:600;
-      font-size:14px;
-    }
-    .section-nav a:hover{
-      border-color:var(--accent);
-      color:var(--accent-soft);
-    }
-
-    /* Generic sections */
-    section.block{
-      padding:16px 0;
-    }
-
-    .block-card{
-      background:var(--panel);
-      border:1px solid var(--border);
-      border-radius:var(--radius-lg);
-      box-shadow:var(--shadow);
-      padding:22px;
-    }
-
-    h2{
-      margin:0 0 8px;
-      font-size:24px;
-      letter-spacing:-.3px;
-    }
-
-    .sub{
-      margin:0;
-      color:var(--muted);
-      font-size:14px;
-    }
-
-    /* Grid cards */
-    .grid-3{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap:12px;
     }
-
-    .mini-card{
-      background:var(--panel-2);
+    .cred .item{
+      background:rgba(255,255,255,.02);
       border:1px solid var(--border);
-      border-radius:12px;
-      padding:16px;
+      border-radius: var(--radius);
+      padding:14px;
+    }
+    .k{color:var(--muted2); font-size:12px; margin-bottom:6px}
+    .v{font-weight:800; font-size:14px}
+
+    /* Section headers */
+    .section-head{
+      margin-bottom:16px;
+    }
+    .section-head h2{
+      margin:0 0 8px;
+      font-size:26px;
+      letter-spacing:-.4px;
+    }
+    .section-head p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      max-width:82ch;
     }
 
-    .mini-card h3{
+    /* Feature blocks */
+    .split{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap:14px;
+    }
+    .card{
+      background:rgba(255,255,255,.02);
+      border:1px solid var(--border);
+      border-radius: var(--radius2);
+      padding:18px;
+    }
+    .card h3{
       margin:0 0 8px;
       font-size:16px;
-      color:var(--text);
+      letter-spacing:-.2px;
     }
-
-    .mini-card p{
+    .card p{
       margin:0;
       color:var(--muted);
       font-size:13px;
+    }
+    .bullets{
+      margin:10px 0 0 18px;
+      color:var(--muted);
+      font-size:13px;
+      padding:0;
+    }
+    .bullets li{margin:6px 0}
+
+    .grid3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+      margin-top:12px;
     }
 
     /* Pricing */
     .pricing{
-      margin-top:14px;
       display:grid;
-      grid-template-columns:repeat(3,1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap:12px;
+      margin-top:14px;
     }
-
-    .price-card{
-      background:var(--panel-2);
+    .price{
+      background:rgba(255,255,255,.02);
       border:1px solid var(--border);
-      border-radius:12px;
-      padding:16px;
+      border-radius: var(--radius2);
+      padding:18px;
       display:flex;
       flex-direction:column;
-      gap:8px;
+      gap:10px;
     }
-
-    .price-card.featured{
-      border-color:rgba(47,129,247,.45);
-      box-shadow:0 0 0 1px rgba(47,129,247,.18) inset;
+    .price.featured{
+      border-color: rgba(47,129,247,.45);
+      box-shadow: 0 0 0 1px rgba(47,129,247,.18) inset, var(--shadow);
     }
-
     .badge{
       display:inline-flex;
       width:max-content;
-      padding:4px 8px;
+      padding:4px 10px;
       border-radius:999px;
-      font-size:11px;
-      font-weight:700;
-      background:rgba(47,129,247,.12);
+      background: rgba(47,129,247,.12);
       border:1px solid rgba(47,129,247,.35);
-      color:var(--accent-soft);
-    }
-
-    .plan{
-      margin:0;
-      font-size:15px;
-      font-weight:700;
-    }
-
-    .price{
-      margin:0;
-      font-size:30px;
+      color:#bcd9ff;
+      font-size:11px;
       font-weight:800;
+    }
+    .plan{
+      font-weight:900;
+      font-size:14px;
+      margin:0;
+    }
+    .amt{
+      font-size:34px;
+      font-weight:900;
+      letter-spacing:-.5px;
+      margin:0;
       line-height:1;
-      letter-spacing:-.3px;
     }
-
-    .price small{
-      font-size:13px;
+    .amt small{font-size:12px; color:var(--muted2); font-weight:800}
+    .fine{
       color:var(--muted);
-      font-weight:600;
-    }
-
-    .price-note{
+      font-size:13px;
       margin:0;
-      color:var(--muted);
-      font-size:13px;
     }
-
-    .price-card ul{
-      margin:2px 0 8px 18px;
-      padding:0;
-      color:var(--muted);
-      font-size:13px;
-    }
-    .price-card li{margin:4px 0}
-
-    /* About + process */
-    .two-col{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns:1.05fr .95fr;
-      gap:12px;
-    }
-
-    .box{
-      background:var(--panel-2);
-      border:1px solid var(--border);
-      border-radius:12px;
-      padding:16px;
-    }
-
-    .box h3{
-      margin:0 0 8px;
-      font-size:16px;
-    }
-    .box p{
-      margin:0;
-      color:var(--muted);
-      font-size:13px;
-    }
-    .box ol{
-      margin:0;
-      padding-left:18px;
-      color:var(--muted);
-      font-size:13px;
-    }
-    .box li{margin:6px 0}
 
     /* FAQ */
-    .faq-grid{
-      margin-top:14px;
+    .faq{
       display:grid;
-      grid-template-columns:1fr 1fr;
+      grid-template-columns: 1fr 1fr;
       gap:12px;
+      margin-top:14px;
     }
-
     details{
-      background:var(--panel-2);
+      background:rgba(255,255,255,.02);
       border:1px solid var(--border);
-      border-radius:12px;
+      border-radius: var(--radius2);
       padding:14px;
     }
-
     summary{
       cursor:pointer;
-      font-weight:700;
-      color:var(--text);
-    }
-
-    details p{
-      color:var(--muted);
-      font-size:13px;
-      margin:10px 0 0;
-    }
-
-    /* SMS consent / proof section */
-    .consent-box{
-      margin-top:14px;
-      background:linear-gradient(180deg,#121821,#10161d);
-      border:1px solid rgba(47,129,247,.22);
-      border-radius:14px;
-      padding:16px;
-    }
-
-    .consent-box h3{
-      margin:0 0 8px;
-      color:var(--accent-soft);
-      font-size:17px;
-    }
-
-    .consent-box p, .consent-box li{
-      color:var(--muted);
-      font-size:13px;
-    }
-
-    .consent-box ul{
-      margin:8px 0 0 18px;
-      padding:0;
-    }
-
-    .consent-example{
-      margin-top:10px;
-      border:1px solid var(--border);
-      border-radius:12px;
-      background:var(--panel-2);
-      padding:12px;
-    }
-
-    .consent-example label{
-      display:block;
-      font-size:13px;
-      color:var(--muted);
-      margin-bottom:6px;
-    }
-
-    .consent-example input[type="text"],
-    .consent-example input[type="tel"]{
-      width:100%;
-      background:#0c1118;
-      border:1px solid var(--border);
-      color:var(--text);
-      border-radius:8px;
-      padding:10px 12px;
-      margin-bottom:10px;
+      font-weight:900;
       font-size:14px;
     }
+    details p{
+      margin:10px 0 0;
+      color:var(--muted);
+      font-size:13px;
+    }
 
-    .checkbox-row{
-      display:flex;
-      align-items:flex-start;
-      gap:10px;
+    /* Compliance (SMS opt-in) */
+    .compliance{
+      margin-top:14px;
+    }
+    .compliance .card{
+      border-color: rgba(47,129,247,.20);
+      background: linear-gradient(180deg, rgba(47,129,247,.06) 0%, rgba(255,255,255,.02) 100%);
+    }
+    .consent-example{
+      margin-top:12px;
+      padding:12px;
+      border-radius: var(--radius);
+      border:1px solid var(--border);
+      background:rgba(11,15,20,.55);
+    }
+    .consent-example label{
+      display:block;
+      font-size:12px;
+      color:var(--muted2);
+      margin:8px 0 6px;
+      font-weight:800;
+    }
+    input[type="text"], input[type="tel"]{
+      width:100%;
+      border-radius:12px;
+      border:1px solid var(--border);
+      padding:10px 12px;
+      background:#0a0e13;
+      color:var(--text);
+      font-size:14px;
+      outline:none;
+    }
+    input:focus{
+      border-color: rgba(47,129,247,.6);
+      box-shadow: 0 0 0 3px rgba(47,129,247,.14);
+    }
+    .checkrow{
+      display:flex; gap:10px; align-items:flex-start;
+      margin-top:10px;
       color:var(--muted);
       font-size:12px;
-      line-height:1.45;
-      margin-bottom:10px;
+      line-height:1.4;
     }
-
-    .checkbox-row input{
-      margin-top:2px;
-      accent-color: var(--accent);
-    }
-
-    .fineprint{
-      color:var(--muted);
-      font-size:11px;
-      margin-top:8px;
-    }
+    .checkrow input{margin-top:2px; accent-color: var(--accent)}
 
     /* Contact */
     .contact-grid{
-      margin-top:14px;
       display:grid;
-      grid-template-columns:1fr 1fr;
+      grid-template-columns: 1fr 1fr;
       gap:12px;
+      margin-top:14px;
     }
-
     .contact-item{
-      background:var(--panel-2);
+      background:rgba(255,255,255,.02);
       border:1px solid var(--border);
-      border-radius:12px;
-      padding:14px;
+      border-radius: var(--radius2);
+      padding:16px;
     }
-    .contact-item .k{
-      color:var(--muted);
-      font-size:12px;
-      margin-bottom:4px;
-    }
-    .contact-item .v{
-      color:var(--text);
-      font-weight:700;
-      font-size:15px;
-      word-break:break-word;
-    }
-
     .contact-item .v a{
-      color:var(--accent-soft);
-    }
-    .contact-item .v a:hover{
-      color:#c7e1ff;
+      color:#bcd9ff;
       text-decoration:underline;
     }
 
-    /* Footer */
-    .footer{
-      padding:22px 0 34px;
-      color:var(--muted);
+    footer{
+      padding:28px 0 40px;
+      color:var(--muted2);
       font-size:12px;
       text-align:center;
     }
 
     /* Responsive */
     @media (max-width: 980px){
-      .hero-grid{grid-template-columns:1fr}
-      .grid-3{grid-template-columns:1fr}
+      .cred{grid-template-columns: 1fr 1fr}
+      .split{grid-template-columns:1fr}
+      .grid3{grid-template-columns:1fr}
       .pricing{grid-template-columns:1fr}
-      .two-col{grid-template-columns:1fr}
-      .faq-grid{grid-template-columns:1fr}
+      .faq{grid-template-columns:1fr}
       .contact-grid{grid-template-columns:1fr}
     }
-
     @media (max-width: 680px){
-      .topbar-inner{
-        min-height:auto;
-        padding:10px 0;
-        align-items:flex-start;
-        flex-direction:column;
-      }
-      .nav{width:100%;justify-content:flex-start}
-      .section-nav{grid-template-columns:1fr 1fr}
+      .topbar-inner{flex-direction:column; align-items:flex-start}
+      .nav{justify-content:flex-start}
       .hero-actions .btn{width:100%}
-      .brand-name,.brand-sub{max-width:220px}
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header class="topbar">
-    <div class="container topbar-inner">
-      <a class="brand" href="#top">
-        <!-- Upload your logo file in the same folder and keep this filename, or change it below -->
-        <img class="brand-logo" src="db-global-services-logo.png" alt="DB Global Services logo" />
-        <div class="brand-meta">
-          <div class="brand-name">DB Global Services</div>
-          <div class="brand-sub">AI Voice Answering + Booking Systems</div>
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="brand" href="#top">
+      <img class="logo" src="db-global-services-logo.png" alt="DB Global Services logo" />
+      <div>
+        <div class="brand-title">DB Global Services</div>
+        <div class="brand-sub">AI Voice Answering + Booking Systems</div>
+      </div>
+    </a>
+
+    <nav class="nav" aria-label="Primary navigation">
+      <a class="link" href="#platform">Platform</a>
+      <a class="link" href="#usecases">Use Cases</a>
+      <a class="link" href="#pricing">Pricing</a>
+      <a class="link" href="/client-updates.html">Client Updates</a>
+      <a class="link" href="#faq">FAQ</a>
+      <a class="btn primary" href="https://calendly.com/inlineharborcreations/10-minute-demo" target="_blank" rel="noopener">Book Demo</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top" class="container">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="panel hero-wrap">
+      <div class="pill">Nationwide • Schedule-Based Businesses</div>
+      <h1>AI voice answering that captures calls and moves them toward bookings.</h1>
+      <p>
+        We deploy an AI assistant that answers inbound calls, asks the right questions, and routes or schedules the next step—
+        so you don’t lose customers when your team is busy or after hours.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn primary" href="https://calendly.com/inlineharborcreations/10-minute-demo" target="_blank" rel="noopener">Book a 10-Min Demo</a>
+        <a class="btn secondary" href="mailto:dbelgrave@mydbglobal.com?subject=DB%20Global%20Services%20Inquiry">Email</a>
+        <a class="btn secondary" href="/client-updates.html">Client Updates</a>
+      </div>
+
+      <div class="sub-actions">
+        Fast pilot setups available • Managed updates to keep the assistant accurate
+      </div>
+
+      <div class="cred">
+        <div class="item">
+          <div class="k">Coverage</div>
+          <div class="v">Nationwide</div>
         </div>
-      </a>
-
-      <nav class="nav" aria-label="Top navigation">
-        <a class="nav-link" href="#services">Services</a>
-        <a class="nav-link" href="#pricing">Pricing</a>
-        <a class="nav-link" href="/client-updates.html">Client Updates</a>
-        <a class="nav-link" href="#faq">FAQ</a>
-        <a class="btn btn-primary" href="https://calendly.com/inlineharborcreations/10-minute-demo" target="_blank" rel="noopener">Book Demo</a>
-      </nav>
-    </div>
-  </header>
-
-  <main id="top">
-    <div class="container">
-
-      <!-- Hero -->
-      <section class="hero">
-        <div class="hero-grid">
-          <div class="card hero-main">
-            <div class="eyebrow">Nationwide • Schedule-Based Businesses</div>
-            <h1>Automated voice answering that helps book more jobs.</h1>
-            <p>
-              DB Global Services builds AI voice answering and booking workflows for businesses that depend on inbound calls.
-              Customers get a response even when your team is busy, after hours, or unavailable.
-            </p>
-
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="https://calendly.com/inlineharborcreations/10-minute-demo" target="_blank" rel="noopener">Book a 10-Min Demo</a>
-              <a class="btn btn-secondary" href="mailto:dbelgrave@mydbglobal.com?subject=DB%20Global%20Services%20Inquiry">Email Us</a>
-              <a class="btn btn-secondary" href="/client-updates.html">Client Updates</a>
-            </div>
-
-            <div class="hero-tags">
-              <span class="tag">AI Voice Answering</span>
-              <span class="tag">Lead Qualification</span>
-              <span class="tag">Booking Support</span>
-              <span class="tag">Missed Call Recovery</span>
-            </div>
-          </div>
-
-          <div class="card hero-side">
-            <div class="stat">
-              <div class="k">Brand</div>
-              <div class="v">DB Global Services</div>
-            </div>
-            <div class="stat">
-              <div class="k">Service Focus</div>
-              <div class="v">AI Voice Answering + Booking</div>
-            </div>
-            <div class="stat">
-              <div class="k">Market</div>
-              <div class="v">Nationwide (Schedule-Based Businesses)</div>
-            </div>
-            <div class="stat">
-              <div class="k">Demo</div>
-              <div class="v">10-Minute Intro Call</div>
-            </div>
-
-            <div class="note">
-              Start with a low-risk pilot (ex: after-hours or overflow calls), then expand into a full AI receptionist workflow.
-            </div>
-          </div>
+        <div class="item">
+          <div class="k">Best Fit</div>
+          <div class="v">Appointment-Driven</div>
         </div>
-
-        <!-- Section nav -->
-        <nav class="section-nav" aria-label="Section navigation">
-          <a href="#services">Services</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#about">About</a>
-          <a href="#faq">FAQ</a>
-        </nav>
-      </section>
-
-      <!-- Services -->
-      <section id="services" class="block">
-        <div class="block-card">
-          <h2>Services</h2>
-          <p class="sub">Automated answering and call-handling workflows for businesses that rely on appointments and inbound calls.</p>
-
-          <div class="grid-3">
-            <div class="mini-card">
-              <h3>AI Voice Answering</h3>
-              <p>
-                An automated voice assistant answers inbound calls, handles common questions, and improves response coverage during busy hours and after hours.
-              </p>
-            </div>
-
-            <div class="mini-card">
-              <h3>Lead Qualification + Routing</h3>
-              <p>
-                Collect request details, identify the call type, and route urgent or complex situations to a person when needed.
-              </p>
-            </div>
-
-            <div class="mini-card">
-              <h3>Booking + Follow-Up Support</h3>
-              <p>
-                Help move callers toward scheduling, confirmations, and next steps so fewer opportunities are lost after the first call.
-              </p>
-            </div>
-          </div>
+        <div class="item">
+          <div class="k">Deployment</div>
+          <div class="v">Pilot → Scale</div>
         </div>
-      </section>
-
-      <!-- Pricing -->
-      <section id="pricing" class="block">
-        <div class="block-card">
-          <h2>Pricing</h2>
-          <p class="sub">Simple structure for testing, launching, and scaling automated voice answering systems.</p>
-
-          <div class="pricing">
-            <div class="price-card">
-              <p class="plan">Pilot Setup</p>
-              <p class="price">$299</p>
-              <p class="price-note">Best for testing fit with a focused workflow (ex: after-hours or overflow calls).</p>
-              <ul>
-                <li>Initial setup + call flow design</li>
-                <li>Basic assistant script</li>
-                <li>Pilot testing + tuning</li>
-              </ul>
-              <a class="btn btn-secondary" href="https://calendly.com/inlineharborcreations/10-minute-demo" target="_blank" rel="noopener">Start with Demo</a>
-            </div>
-
-            <div class="price-card featured">
-              <span class="badge">Most Popular</span>
-              <p class="plan">Managed AI Answering</p>
-              <p class="price">$699 <small>/ month</small></p>
-              <p class="price-note">Ongoing AI answering + core optimization and support.</p>
-              <ul>
-                <li>AI answering + qualification flow</li>
-                <li>Routing / escalation rules</li>
-                <li>Monthly tuning + performance review</li>
-              </ul>
-              <a class="btn btn-primary" href="https://calendly.com/inlineharborcreations/10-minute-demo" target="_blank" rel="noopener">Book Demo</a>
-            </div>
-
-            <div class="price-card">
-              <p class="plan">Advanced Booking Flow</p>
-              <p class="price">$1,199 <small>/ month</small></p>
-              <p class="price-note">For higher-volume businesses needing deeper workflows and more tuning.</p>
-              <ul>
-                <li>Advanced call logic</li>
-                <li>Booking support optimization</li>
-                <li>Priority updates + changes</li>
-              </ul>
-              <a class="btn btn-secondary" href="https://calendly.com/inlineharborcreations/10-minute-demo" target="_blank" rel="noopener">Discuss Setup</a>
-            </div>
-          </div>
+        <div class="item">
+          <div class="k">Support</div>
+          <div class="v">Managed Updates</div>
         </div>
-      </section>
-
-      <!-- About -->
-      <section id="about" class="block">
-        <div class="block-card">
-          <h2>About</h2>
-          <p class="sub">DB Global Services builds practical AI call-handling systems designed to capture more opportunities and improve response speed.</p>
-
-          <div class="two-col">
-            <div class="box">
-              <h3>Who this helps</h3>
-              <p>
-                This service is designed for businesses where missed calls = lost revenue. Examples include cleaning, HVAC, repair shops,
-                med spas, dental/medical offices, property management, and other appointment-driven businesses.
-              </p>
-            </div>
-
-            <div class="box">
-              <h3>How it works (simple)</h3>
-              <ol>
-                <li>Inbound calls are answered by an automated voice assistant.</li>
-                <li>The assistant collects request details and asks qualifying questions.</li>
-                <li>Calls are routed, booked, or sent for human follow-up based on business rules.</li>
-                <li>The workflow is reviewed and improved over time.</li>
-              </ol>
-            </div>
-          </div>
-
-          <!-- SMS Consent / Opt-In reference for compliance -->
-          <div class="consent-box" id="sms-consent">
-            <h3>SMS Consent / Opt-In (Service Communication)</h3>
-            <p>
-              This page includes example disclosure language showing how consent can be collected for service-related text messages such as
-              appointment coordination, quote follow-up, and support updates.
-            </p>
-
-            <ul>
-              <li>Messages are used for service inquiries, scheduling, and support communication.</li>
-              <li>Message frequency varies based on customer requests and appointment activity.</li>
-              <li>Message and data rates may apply.</li>
-              <li>Reply <strong>STOP</strong> to opt out at any time.</li>
-              <li>Reply <strong>HELP</strong> for help.</li>
-            </ul>
-
-            <div class="consent-example">
-              <label for="demo-name">Name</label>
-              <input id="demo-name" type="text" placeholder="Your name" />
-
-              <label for="demo-phone">Phone Number</label>
-              <input id="demo-phone" type="tel" placeholder="(555) 555-5555" />
-
-              <div class="checkbox-row">
-                <input id="sms-consent-check" type="checkbox" />
-                <label for="sms-consent-check" style="margin:0;">
-                  I agree to receive text messages from <strong>DB Global Services</strong> about quotes, scheduling, and service-related follow-up.
-                  Message and data rates may apply. Reply STOP to opt out and HELP for help.
-                </label>
-              </div>
-
-              <button class="btn btn-secondary" type="button" aria-disabled="true" title="Example only">Submit Request (Example)</button>
-
-              <div class="fineprint">
-                This is an example consent/opt-in section for public reference and messaging verification documentation.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- FAQ -->
-      <section id="faq" class="block">
-        <div class="block-card">
-          <h2>FAQ</h2>
-          <p class="sub">Common questions about automated voice answering and booking workflows.</p>
-
-          <div class="faq-grid">
-            <details>
-              <summary>What types of businesses are the best fit?</summary>
-              <p>
-                Businesses that depend on inbound calls and scheduled appointments are the best fit, especially when missed calls lead to lost bookings.
-              </p>
-            </details>
-
-            <details>
-              <summary>Does this replace my team?</summary>
-              <p>
-                No. It is designed to handle repetitive call intake and improve response coverage, while routing important or complex situations to a person.
-              </p>
-            </details>
-
-            <details>
-              <summary>Can this be set up as after-hours only first?</summary>
-              <p>
-                Yes. Starting with after-hours or overflow call handling is a common low-risk pilot approach.
-              </p>
-            </details>
-
-            <details>
-              <summary>Can this help with missed calls too?</summary>
-              <p>
-                Yes. Automated voice answering can be paired with missed-call recovery and follow-up workflows depending on the business setup.
-              </p>
-            </details>
-          </div>
-        </div>
-      </section>
-
-      <!-- Contact -->
-      <section id="contact" class="block">
-        <div class="block-card">
-          <h2>Contact</h2>
-          <p class="sub">Book a short demo to discuss a pilot setup for your business.</p>
-
-          <div class="contact-grid">
-            <div class="contact-item">
-              <div class="k">Email</div>
-              <div class="v">
-                <a href="mailto:dbelgrave@mydbglobal.com?subject=DB%20Global%20Services%20Demo%20Request">
-                  dbelgrave@mydbglobal.com
-                </a>
-              </div>
-            </div>
-
-            <div class="contact-item">
-              <div class="k">Demo Link</div>
-              <div class="v">
-                <a href="https://calendly.com/inlineharborcreations/10-minute-demo" target="_blank" rel="noopener">
-                  calendly.com/inlineharborcreations/10-minute-demo
-                </a>
-              </div>
-            </div>
-
-            <div class="contact-item">
-              <div class="k">Client Update Portal</div>
-              <div class="v">
-                <a href="/client-updates.html">mydbglobal.com/client-updates.html</a>
-              </div>
-            </div>
-
-            <div class="contact-item">
-              <div class="k">Coverage</div>
-              <div class="v">Nationwide (Schedule-Based Businesses)</div>
-            </div>
-          </div>
-
-          <div class="hero-actions" style="margin-top:14px;">
-            <a class="btn btn-primary" href="https://calendly.com/inlineharborcreations/10-minute-demo" target="_blank" rel="noopener">Book Demo</a>
-            <a class="btn btn-secondary" href="mailto:dbelgrave@mydbglobal.com?subject=DB%20Global%20Services%20Inquiry">Email Us</a>
-            <a class="btn btn-secondary" href="/client-updates.html">Client Updates</a>
-          </div>
-        </div>
-      </section>
-
-      <div class="footer">
-        © <span id="year"></span> DB Global Services • AI Voice Answering + Booking Systems<br />
-        Service messaging examples include STOP to opt out and HELP for help.
       </div>
     </div>
-  </main>
+  </section>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <!-- PLATFORM -->
+  <section id="platform">
+    <div class="section-head">
+      <h2>Platform</h2>
+      <p>
+        A clean, reliable workflow: answer calls → collect details → route or schedule next steps → improve over time.
+        Built to reduce missed opportunities without overcomplicating your operations.
+      </p>
+    </div>
+
+    <div class="split">
+      <div class="card">
+        <h3>AI voice answering</h3>
+        <p>Answer inbound calls with a consistent, professional intake experience.</p>
+        <ul class="bullets">
+          <li>Handles common questions and request intake</li>
+          <li>Works during busy periods and after hours</li>
+          <li>Escalation paths for priority cases</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Qualification + routing</h3>
+        <p>Capture the information you need before the call ends.</p>
+        <ul class="bullets">
+          <li>Collects intent, location, timing, and service category</li>
+          <li>Routes urgent calls and flags high-value requests</li>
+          <li>Structured outcomes you can review</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid3">
+      <div class="card">
+        <h3>Booking support</h3>
+        <p>Move callers toward scheduling, confirmation, and next steps.</p>
+      </div>
+      <div class="card">
+        <h3>Managed optimization</h3>
+        <p>We tune scripts, flows, and FAQs as your business evolves.</p>
+      </div>
+      <div class="card">
+        <h3>Client update portal</h3>
+        <p>Submit approved changes through your update page to keep the assistant accurate.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- USE CASES -->
+  <section id="usecases">
+    <div class="section-head">
+      <h2>Use cases</h2>
+      <p>Designed for schedule-based businesses where missed calls directly impact revenue.</p>
+    </div>
+
+    <div class="grid3">
+      <div class="card">
+        <h3>Home services</h3>
+        <p>Cleaning, HVAC, plumbing, appliance repair, electrical, and more.</p>
+      </div>
+      <div class="card">
+        <h3>Health + wellness</h3>
+        <p>Med spa, dental, therapy offices, clinics with appointment workflows.</p>
+      </div>
+      <div class="card">
+        <h3>Property workflows</h3>
+        <p>Property management, turnovers, maintenance requests, leasing inquiries.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <div class="section-head">
+      <h2>Pricing</h2>
+      <p>Start small with a pilot, then move into managed operation as volume increases.</p>
+    </div>
+
+    <div class="pricing">
+      <div class="price">
+        <p class="plan">Pilot Setup</p>
+        <p class="amt">$299</p>
+        <p class="fine">Initial setup + focused workflow (after-hours or overflow recommended).</p>
+        <ul class="bullets">
+          <li>Call flow design</li>
+          <li>Assistant script baseline</li>
+          <li>Pilot testing + tuning</li>
+        </ul>
+        <a class="btn secondary" href="https://calendly.com/inlineharborcreations/10-minute-demo" target="_blank" rel="noopener">Start with demo</a>
+      </div>
+
+      <div class="price featured">
+        <span class="badge">Most Popular</span>
+        <p class="plan">Managed AI Answering</p>
+        <p class="amt">$699 <small>/ month</small></p>
+        <p class="fine">Ongoing management, tuning, and support.</p>
+        <ul class="bullets">
+          <li>Answering + qualification</li>
+          <li>Routing / escalation rules</li>
+          <li>Monthly optimization</li>
+        </ul>
+        <a class="btn primary" href="https://calendly.com/inlineharborcreations/10-minute-demo" target="_blank" rel="noopener">Book demo</a>
+      </div>
+
+      <div class="price">
+        <p class="plan">Advanced Booking Flow</p>
+        <p class="amt">$1,199 <small>/ month</small></p>
+        <p class="fine">For higher-volume needs requiring deeper workflows and priority changes.</p>
+        <ul class="bullets">
+          <li>Advanced logic + handling</li>
+          <li>Priority updates</li>
+          <li>Ongoing refinement</li>
+        </ul>
+        <a class="btn secondary" href="https://calendly.com/inlineharborcreations/10-minute-demo" target="_blank" rel="noopener">Discuss setup</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="section-head">
+      <h2>FAQ</h2>
+      <p>Clear answers to common questions.</p>
+    </div>
+
+    <div class="faq">
+      <details>
+        <summary>Does this replace my team?</summary>
+        <p>No. It handles intake and common questions, then routes or escalates when needed.</p>
+      </details>
+      <details>
+        <summary>Can we start after-hours only?</summary>
+        <p>Yes. That’s often the cleanest pilot before expanding coverage.</p>
+      </details>
+      <details>
+        <summary>How do we keep the assistant updated?</summary>
+        <p>Use the Client Updates page to submit approved changes (hours, services, FAQs). We implement updates to keep everything stable.</p>
+      </details>
+      <details>
+        <summary>Do customers need an app?</summary>
+        <p>No. Customers just call the business as usual. The assistant answers through the configured phone workflow.</p>
+      </details>
+    </div>
+
+    <!-- Compliance card (SMS opt-in) -->
+    <div class="compliance">
+      <div class="card">
+        <h3>Service messaging consent (reference)</h3>
+        <p>
+          This section provides example language showing how consent may be collected for service-related text messages
+          (quotes, scheduling, support updates). Reply <strong>STOP</strong> to opt out and <strong>HELP</strong> for help.
+        </p>
+
+        <div class="consent-example">
+          <label for="nm">Name</label>
+          <input id="nm" type="text" placeholder="Your name" />
+
+          <label for="ph">Phone Number</label>
+          <input id="ph" type="tel" placeholder="(555) 555-5555" />
+
+          <div class="checkrow">
+            <input id="ck" type="checkbox" />
+            <label for="ck" style="margin:0;">
+              I agree to receive text messages from <strong>DB Global Services</strong> about quotes, scheduling, and service-related follow-up.
+              Message and data rates may apply. Reply STOP to opt out and HELP for help.
+            </label>
+          </div>
+
+          <a class="btn secondary" href="#faq" onclick="return false;" aria-disabled="true" title="Example only">Submit (Example)</a>
+          <div style="margin-top:10px; color:var(--muted2); font-size:11px;">
+            Example only. Used as public reference for messaging verification documentation.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-head">
+      <h2>Contact</h2>
+      <p>Book a short intro call, or send a message. Existing clients can submit changes through the update portal.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-item">
+        <div class="k">Email</div>
+        <div class="v"><a href="mailto:dbelgrave@mydbglobal.com?subject=DB%20Global%20Services%20Demo%20Request">dbelgrave@mydbglobal.com</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="k">Demo</div>
+        <div class="v"><a href="https://calendly.com/inlineharborcreations/10-minute-demo" target="_blank" rel="noopener">Book a 10-minute demo</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="k">Client Updates</div>
+        <div class="v"><a href="/client-updates.html">Submit an update request</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="k">Coverage</div>
+        <div class="v">Nationwide (Schedule-Based Businesses)</div>
+      </div>
+    </div>
+
+    <div class="hero-actions">
+      <a class="btn primary" href="https://calendly.com/inlineharborcreations/10-minute-demo" target="_blank" rel="noopener">Book Demo</a>
+      <a class="btn secondary" href="mailto:dbelgrave@mydbglobal.com?subject=DB%20Global%20Services%20Inquiry">Email</a>
+      <a class="btn secondary" href="/client-updates.html">Client Updates</a>
+    </div>
+  </section>
+
+  <footer>
+    © <span id="year"></span> DB Global Services • AI Voice Answering + Booking Systems
+  </footer>
+
+</main>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
 </body>
 </html>
